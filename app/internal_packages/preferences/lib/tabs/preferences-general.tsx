@@ -6,6 +6,7 @@ import ConfigSchemaItem from './config-schema-item';
 import WorkspaceSection from './workspace-section';
 import SendingSection from './sending-section';
 import LanguageSection from './language-section';
+import ReplyReportingSection from './reply-reporting-section';
 import { ConfigLike, ConfigSchemaLike } from '../types';
 
 class PreferencesGeneral extends React.Component<{
@@ -112,6 +113,8 @@ class PreferencesGeneral extends React.Component<{
             />
           </div>
         </div>
+
+        <ReplyReportingSection config={this.props.config} />
 
         <div className="local-data">
           <h6>{localized('Local Data')}</h6>

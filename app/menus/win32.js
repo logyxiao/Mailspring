@@ -223,6 +223,10 @@ module.exports = {
       label: localized('Export Sent Recipients by Article') + '...',
       command: 'window:export-sent-recipients',
     },
+    {
+      label: localized('Export Human Reply Times') + '...',
+      command: 'window:export-human-reply-times',
+    },
     { type: 'separator' },
     { label: localized('Preferences'), command: 'application:open-preferences' },
     {

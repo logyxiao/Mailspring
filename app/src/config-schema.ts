@@ -124,6 +124,16 @@ export default {
           },
         },
       },
+      replyReports: {
+        type: 'object',
+        properties: {
+          weekendReviewEmails: {
+            type: 'array',
+            default: [],
+            items: { type: 'string' },
+          },
+        },
+      },
       reading: {
         type: 'object',
         properties: {
