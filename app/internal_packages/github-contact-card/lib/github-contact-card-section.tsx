@@ -30,7 +30,7 @@ const GithubProfile = function GithubProfile(props: { profile: any }) {
     <div className="profile">
       <img
         className="logo"
-        alt="github logo"
+        alt={localized('github logo')}
         src="mailspring://github-contact-card/assets/github.png"
       />
       <a href={profile.html_url}>{profile.login}</a>

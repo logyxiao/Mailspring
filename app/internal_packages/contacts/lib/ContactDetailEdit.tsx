@@ -1,3 +1,5 @@
+import { contactTypeLabel } from './contact-type-labels';
+import { localized } from '../../../src/intl';
 import React from 'react';
 import { Contact } from 'mailspring-exports';
 import { ContactBase } from './ContactInfoMapping';
@@ -57,7 +59,7 @@ export class ContactDetailEdit extends React.Component<{
           <div className="contact-edit-section-content">
             <div className="contact-edit-field">
               <label>
-                First Name
+                {localized('First Name')}
                 <input
                   type="text"
                   value={data.name.givenName}
@@ -69,7 +71,7 @@ export class ContactDetailEdit extends React.Component<{
             </div>
             <div className="contact-edit-field">
               <label>
-                Last Name
+                {localized('Last Name')}
                 <input
                   type="text"
                   value={data.name.familyName}
@@ -88,7 +90,7 @@ export class ContactDetailEdit extends React.Component<{
               {(item, onChange) => (
                 <div className="contact-edit-field">
                   <label>
-                    Nickname
+                    {localized('Nickname')}
                     <input
                       type="text"
                       value={item.value}
@@ -109,7 +111,7 @@ export class ContactDetailEdit extends React.Component<{
             <div className="contact-edit-twoup">
               <div className="contact-edit-field">
                 <label>
-                  Title
+                  {localized('Title')}
                   <input
                     type="text"
                     value={data.title}
@@ -119,7 +121,7 @@ export class ContactDetailEdit extends React.Component<{
               </div>
               <div className="contact-edit-field" style={{ flex: 0.7 }}>
                 <label>
-                  Company
+                  {localized('Company')}
                   <input
                     type="text"
                     value={data.company}
@@ -145,7 +147,7 @@ export class ContactDetailEdit extends React.Component<{
                 <div className="contact-edit-twoup">
                   <div className="contact-edit-field">
                     <label>
-                      Email
+                      {localized('Email')}
                       <input
                         type="text"
                         value={item.value}
@@ -156,7 +158,8 @@ export class ContactDetailEdit extends React.Component<{
                   <div className="contact-edit-field" style={{ flex: 0.7 }}>
                     <span aria-hidden="true" className="form-spacer" />
                     <TypeaheadFreeInput
-                      placeholder="Label"
+                      formatSuggestion={contactTypeLabel}
+                      placeholder={localized('Label')}
                       suggestions={BaseTypes}
                       value={item.type || ''}
                       onChange={(e) => onChange({ type: e.currentTarget.value })}
@@ -182,7 +185,7 @@ export class ContactDetailEdit extends React.Component<{
                 <div className="contact-edit-twoup">
                   <div className="contact-edit-field">
                     <label>
-                      Phone
+                      {localized('Phone')}
                       <input
                         type="text"
                         value={item.value}
@@ -193,7 +196,8 @@ export class ContactDetailEdit extends React.Component<{
                   <div className="contact-edit-field" style={{ flex: 0.7 }}>
                     <span aria-hidden="true" className="form-spacer" />
                     <TypeaheadFreeInput
-                      placeholder="Label"
+                      formatSuggestion={contactTypeLabel}
+                      placeholder={localized('Label')}
                       suggestions={PhoneTypes}
                       value={item.type || ''}
                       onChange={(e) => onChange({ type: e.currentTarget.value })}
@@ -227,7 +231,7 @@ export class ContactDetailEdit extends React.Component<{
                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                   <div className="contact-edit-field">
                     <label>
-                      Street Address
+                      {localized('Street Address')}
                       <input
                         type="text"
                         value={item.streetAddress}
@@ -237,7 +241,7 @@ export class ContactDetailEdit extends React.Component<{
                   </div>
                   <div className="contact-edit-field">
                     <label>
-                      Street Address line 2
+                      {localized('Street Address line 2')}
                       <input
                         type="text"
                         value={item.extendedAddress}
@@ -247,7 +251,7 @@ export class ContactDetailEdit extends React.Component<{
                   </div>
                   <div className="contact-edit-field">
                     <label>
-                      City
+                      {localized('City')}
                       <input
                         type="text"
                         value={item.city}
@@ -258,7 +262,7 @@ export class ContactDetailEdit extends React.Component<{
                   <div className="contact-edit-twoup">
                     <div className="contact-edit-field">
                       <label>
-                        Region
+                        {localized('Region')}
                         <input
                           type="text"
                           value={item.region}
@@ -268,7 +272,7 @@ export class ContactDetailEdit extends React.Component<{
                     </div>
                     <div className="contact-edit-field" style={{ flex: 0.7 }}>
                       <label>
-                        Postal Code
+                        {localized('Postal Code')}
                         <input
                           type="text"
                           value={item.postalCode}
@@ -280,7 +284,7 @@ export class ContactDetailEdit extends React.Component<{
 
                   <div className="contact-edit-field">
                     <label>
-                      Country
+                      {localized('Country')}
                       <input
                         type="text"
                         value={item.country}
@@ -291,8 +295,9 @@ export class ContactDetailEdit extends React.Component<{
                   <div className="contact-edit-field" style={{ flex: 0.7 }}>
                     <span aria-hidden="true" className="form-spacer" />
                     <TypeaheadFreeInput
-                      aria-label="Type"
-                      placeholder="Label"
+                      formatSuggestion={contactTypeLabel}
+                      aria-label={localized('Type')}
+                      placeholder={localized('Label')}
                       suggestions={BaseTypes}
                       value={item.type || ''}
                       onChange={(e) => onChange({ type: e.currentTarget.value })}
@@ -334,7 +339,7 @@ export class ContactDetailEdit extends React.Component<{
                   <div className="contact-edit-twoup">
                     <div className="contact-edit-field">
                       <label>
-                        Relation
+                        {localized('Relation')}
                         <input
                           type="text"
                           value={item.person}
@@ -345,7 +350,8 @@ export class ContactDetailEdit extends React.Component<{
                     <div className="contact-edit-field" style={{ flex: 0.7 }}>
                       <span aria-hidden="true" className="form-spacer" />
                       <TypeaheadFreeInput
-                        placeholder="Label"
+                        formatSuggestion={contactTypeLabel}
+                        placeholder={localized('Label')}
                         suggestions={RelationTypes}
                         value={item.type || ''}
                         onChange={(e) => onChange({ type: e.currentTarget.value })}
@@ -371,7 +377,7 @@ export class ContactDetailEdit extends React.Component<{
                 <div className="contact-edit-twoup">
                   <div className="contact-edit-field">
                     <label>
-                      Link
+                      {localized('Link')}
                       <input
                         type="text"
                         value={item.value}
@@ -382,7 +388,8 @@ export class ContactDetailEdit extends React.Component<{
                   <div className="contact-edit-field" style={{ flex: 0.7 }}>
                     <span aria-hidden="true" className="form-spacer" />
                     <TypeaheadFreeInput
-                      placeholder="Label"
+                      formatSuggestion={contactTypeLabel}
+                      placeholder={localized('Label')}
                       suggestions={WebTypes}
                       value={item.type || ''}
                       onChange={(e) => onChange({ type: e.currentTarget.value })}
@@ -400,7 +407,7 @@ export class ContactDetailEdit extends React.Component<{
           <div className="contact-edit-section-content">
             <div className="contact-edit-field">
               <label>
-                Notes
+                {localized('Notes')}
                 <textarea
                   className="contact-notes-textarea"
                   value={data.notes || ''}

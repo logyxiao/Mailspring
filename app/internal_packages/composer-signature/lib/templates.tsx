@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 import React from 'react';
 import querystring from 'querystring';
 
@@ -136,7 +137,7 @@ function GenericInfoBlock(props, prefixStyle: any = PrefixStyles.None) {
             <a style={{ color: props.tintColor }} href={`tel:${props.fax}`}>
               {props.fax}
             </a>
-            &nbsp;(Fax)
+            &nbsp;({localized('Fax')})
           </span>
         )}
       </div>
@@ -475,7 +476,7 @@ const Templates = [
                       <a style={{ color: props.tintColor }} href={`tel:${props.fax}`}>
                         {props.fax}
                       </a>
-                      &nbsp;(Fax)
+                      &nbsp;({localized('Fax')})
                     </span>
                   )}
                   {props.facebookURL && (

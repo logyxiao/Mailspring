@@ -91,6 +91,12 @@ export class Category extends Model {
     return decoded;
   }
 
+  // Keep displayName/path stable for folder renames, rule persistence and IMAP.
+  // Only presentation code should use this localized label.
+  get localizedDisplayName() {
+    return LocalizedStringForRole[this.role] || this.displayName;
+  }
+
   /* Available for historical reasons, do not use. */
   get name() {
     return this.role;

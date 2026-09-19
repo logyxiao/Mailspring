@@ -10,7 +10,7 @@ export class Comparator {
   static get Default() {
     return new Comparator(
       {
-        name: 'Default',
+        name: localized('Default'),
         arrayMatchFn: Array.prototype.some,
       },
       ({ actual, desired }) => _.isEqual(actual, desired)
@@ -128,6 +128,8 @@ export const Comparators = {
 
 interface TemplateEnumValue {
   name: string;
+  // Stable, untranslated name used when a folder / label id changes on the server.
+  valueName?: string;
   value: string;
 }
 

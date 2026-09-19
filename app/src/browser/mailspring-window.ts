@@ -1,3 +1,4 @@
+import { localized } from '../intl';
 import { BrowserWindow, app, dialog } from 'electron';
 import path from 'path';
 import fs from 'fs';
@@ -364,9 +365,9 @@ export default class MailspringWindow extends EventEmitter {
 
       const chosen = dialog.showMessageBoxSync(this.browserWindow, {
         type: 'warning',
-        buttons: ['Close', 'Keep Waiting'],
-        message: 'Mailspring is not responding',
-        detail: 'Would you like to force close it or keep waiting?',
+        buttons: [localized('Close'), localized('Keep Waiting')],
+        message: localized('Mailspring is not responding'),
+        detail: localized('Would you like to force close it or keep waiting?'),
       });
       if (chosen === 0) {
         this.browserWindow.destroy();
@@ -407,9 +408,9 @@ export default class MailspringWindow extends EventEmitter {
       } else {
         const chosen = dialog.showMessageBoxSync({
           type: 'warning',
-          buttons: ['Close Window', 'Reload', 'Keep It Open'],
-          message: 'Mailspring has crashed',
-          detail: 'Please report this issue to us at support@getmailspring.com.',
+          buttons: [localized('Close Window'), localized('Reload'), localized('Keep It Open')],
+          message: localized('Mailspring has crashed'),
+          detail: localized('Please report this issue to us at support@getmailspring.com.'),
         });
         if (chosen === 0) {
           this.browserWindow.destroy();

@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Actions, FocusedPerspectiveStore, Thread } from 'mailspring-exports';
@@ -45,7 +46,7 @@ class SnoozeButton extends Component<SnoozeButtonProps> {
   render() {
     return (
       <button
-        title="Snooze"
+        title={localized('Snooze')}
         tabIndex={-1}
         className={`snooze-button ${this.props.className}`}
         onClick={this.onClick}
@@ -101,7 +102,7 @@ export class ToolbarSnooze extends Component<{ items: Thread[] }> {
       return <span />;
     }
     return (
-      <RovingTabIndexToolbar label="Snooze" className="button-group">
+      <RovingTabIndexToolbar label={localized('Snooze')} className="button-group">
         <BindGlobalCommands commands={{ 'core:snooze-item': () => this._btn.onClick() }}>
           <SnoozeButton threads={this.props.items} ref={(b) => (this._btn = b)} />
         </BindGlobalCommands>

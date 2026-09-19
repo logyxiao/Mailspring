@@ -1,3 +1,4 @@
+import { localized } from '../intl';
 import _ from 'underscore';
 import { exec } from 'child_process';
 import React, { CSSProperties } from 'react';
@@ -410,7 +411,14 @@ export default class SwipeContainer extends React.Component<
         {...otherProps}
         style={{ touchAction: 'pan-x pan-y', ...otherProps.style }}
       >
-        <div style={backingStyles} className={backingClass} aria-hidden="true" />
+        <div
+          style={backingStyles}
+          className={backingClass}
+          data-trash-label={localized('Trash')}
+          data-archive-label={localized('Archive')}
+          data-snooze-label={localized('Snooze')}
+          aria-hidden="true"
+        />
         <div style={{ transform: `translate3d(${currentX}px, 0, 0)` }}>{this.props.children}</div>
       </div>
     );

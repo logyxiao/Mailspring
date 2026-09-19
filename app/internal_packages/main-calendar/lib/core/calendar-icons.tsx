@@ -1,3 +1,4 @@
+import { localized } from '../../../../src/intl';
 import React from 'react';
 
 /**
@@ -10,7 +11,7 @@ export const RecurringIcon = ({ size = 10 }: { size?: number }) => (
     viewBox="0 0 12 12"
     width={size}
     height={size}
-    aria-label="Recurring"
+    aria-label={localized('Recurring')}
   >
     {/* Left half: bottom edge → bottom-left corner → left edge → top-left corner → top edge */}
     <path

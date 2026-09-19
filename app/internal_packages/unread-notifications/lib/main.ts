@@ -177,7 +177,7 @@ export class Notifier {
         } else if (activationType === 'clicked') {
           AppEnv.displayWindow();
           if (!thread) {
-            AppEnv.showErrorDialog(`Can't find that thread`);
+            AppEnv.showErrorDialog(localized("Can't find that thread"));
             return;
           }
           Actions.ensureCategoryIsFocused('inbox', thread.accountId);

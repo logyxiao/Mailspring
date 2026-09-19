@@ -269,8 +269,19 @@ export function getCurrentLocale() {
   return locale;
 }
 
+export function getLanguageDisplayName(code: string, fallback = code) {
+  try {
+    const names = new Intl.DisplayNames([(locale || automaticLocale).replace(/_/g, '-')], {
+      type: 'language',
+    });
+    return names.of(code.replace(/_/g, '-')) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export function getAvailableLanguages() {
-  const localeToItem = (f) => ({ key: f, name: LANG_NAMES[f] || f });
+  const localeToItem = (f) => ({ key: f, name: getLanguageDisplayName(f, LANG_NAMES[f] || f) });
 
   // The list we expose is mostly just languages, but also a few lang-locale combos like zh-CN.
   // If our current/system locale in a known combo expose that, otherwis cut it so it's always

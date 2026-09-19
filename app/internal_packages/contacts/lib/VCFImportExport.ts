@@ -249,7 +249,7 @@ export function importContactsFromFile(accountId: string) {
   AppEnv.showOpenDialog(
     {
       title: localized('Import VCards'),
-      filters: [{ name: 'VCard Files', extensions: ['vcf', 'vcard'] }],
+      filters: [{ name: localized('VCard Files'), extensions: ['vcf', 'vcard'] }],
       properties: ['openFile', 'multiSelections'],
     },
     (filePaths) => {

@@ -135,7 +135,8 @@ export function ActionTemplatesForAccount(account): Template[] {
     .map((cats) =>
       cats.map((cat) => {
         return {
-          name: cat.displayName || cat.name,
+          name: cat.localizedDisplayName || cat.name,
+          valueName: cat.displayName,
           value: cat.id,
         };
       })

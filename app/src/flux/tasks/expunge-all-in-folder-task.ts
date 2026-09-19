@@ -23,7 +23,7 @@ export class ExpungeAllInFolderTask extends Task {
   label() {
     return localized(
       `Deleting all messages in %@`,
-      this.folder ? this.folder.displayName : 'unknown'
+      this.folder ? this.folder.localizedDisplayName : localized('Unknown')
     );
   }
 }

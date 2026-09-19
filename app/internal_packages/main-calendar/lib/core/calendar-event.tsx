@@ -1,3 +1,4 @@
+import { localized } from '../../../../src/intl';
 import React, { CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import { InjectedComponentSet } from 'mailspring-component-kit';
@@ -406,7 +407,7 @@ export class CalendarEvent extends React.Component<CalendarEventProps, CalendarE
         </span>
         {this._renderEventDetails()}
         {event.isRecurring && !event.isCancelled && !event.isException && <RecurringIcon />}
-        {event.isException && <span className="exception-tag">Modified</span>}
+        {event.isException && <span className="exception-tag">{localized('Modified')}</span>}
         <InjectedComponentSet
           className="event-injected-components"
           style={{ position: 'absolute' }}

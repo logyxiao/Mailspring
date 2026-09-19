@@ -1,3 +1,4 @@
+import { localized } from '../../../../src/intl';
 import moment from 'moment';
 import React from 'react';
 import { DateUtils } from 'mailspring-exports';
@@ -49,10 +50,10 @@ export const EventTimerangePicker: React.FunctionComponent<{
       <RetinaImg name="ic-eventcard-time@2x.png" mode={RetinaImg.Mode.ContentPreserve} />
       <span>
         <TimePicker value={start * 1000} onChange={onChangeStartTime} />
-        to
+        {localized('to')}
         <TimePicker value={end * 1000} onChange={onChangeEndTime} />
         <span className="timezone">{moment().tz(DateUtils.timeZone).format('z')}</span>
-        &nbsp; on &nbsp;
+        &nbsp;{localized('on')}&nbsp;
         <DatePicker value={start * 1000} onChange={onChangeDay} />
       </span>
     </div>

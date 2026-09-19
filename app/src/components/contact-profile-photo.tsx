@@ -1,3 +1,4 @@
+import { localized } from '../intl';
 import React from 'react';
 import { Contact } from '../flux/models/contact';
 import * as Utils from '../flux/models/utils';
@@ -44,7 +45,7 @@ export class ContactProfilePhoto extends React.Component<{
     }
 
     if (avatar) {
-      content = <img alt="Profile" src={avatar} />;
+      content = <img alt={localized('Profile')} src={avatar} />;
     }
 
     return (

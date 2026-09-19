@@ -169,7 +169,7 @@ export default class SignaturePhotoPicker extends React.Component<
 
     return (
       <div className="field photo-picker">
-        <label htmlFor="photoURL">Picture</label>
+        <label htmlFor="photoURL">{localized('Picture')}</label>
         <div style={{ display: 'flex' }}>
           {isUploadEnabled && (
             <div>

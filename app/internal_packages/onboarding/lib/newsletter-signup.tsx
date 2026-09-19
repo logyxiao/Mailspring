@@ -117,7 +117,7 @@ export default class NewsletterSignup extends React.Component<
     if (this.state.status === 'Error') {
       return (
         <button onClick={() => this._onGetStatus()} className="btn">
-          Retry
+          {localized('Retry')}
         </button>
       );
     }

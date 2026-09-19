@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 /*
  * decaffeinate suggestions:
  * DS207: Consider shorter variations of null checks
@@ -29,7 +30,8 @@ export function menuItem(
   { isSelected, clickHandlers }: { isSelected?: boolean; clickHandlers?: boolean } = {}
 ) {
   const item: IAccountMenuItem = {
-    label: !Array.isArray(account) && account.label != null ? account.label : 'All Accounts',
+    label:
+      !Array.isArray(account) && account.label != null ? account.label : localized('All Accounts'),
     command: `window:select-account-${idx}`,
     account: true,
   };

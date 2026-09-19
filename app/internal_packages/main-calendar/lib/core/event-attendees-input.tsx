@@ -135,7 +135,7 @@ export class EventAttendeesInput extends React.Component<EventAttendeesInputProp
     );
     menu.append(
       new MenuItem({
-        label: 'Remove',
+        label: localized('Remove'),
         click: () => this._remove([participant]),
       })
     );

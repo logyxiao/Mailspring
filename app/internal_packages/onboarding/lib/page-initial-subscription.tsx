@@ -132,7 +132,7 @@ export default class InitialPreferencesPage extends React.Component {
         </div>
 
         <button className="btn btn-large" style={{ marginTop: 50 }} onClick={this._onFinished}>
-          Finish Setup
+          {localized('Finish Setup')}
         </button>
       </div>
     );

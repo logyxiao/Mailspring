@@ -106,7 +106,7 @@ class EmptyInboxState extends React.Component<
       <div className="inbox-zero-animation" ref={(el) => (this._containerEl = el)}>
         <div className="animation-wrapper" style={style}>
           <iframe
-            title="animation"
+            title={localized('animation')}
             src={`animations/inbox-zero/${animationName}/${animationName}.html`}
           />
           <div className="message">{localized('Hooray! You’re done.')}</div>

@@ -55,7 +55,7 @@ export class EventedIFrame extends React.Component<
 
   render() {
     const otherProps = Utils.fastOmit(this.props, EventedIFrame.ownPropKeys);
-    return <iframe title="iframe" seamless {...otherProps} />;
+    return <iframe title={localized('iframe')} seamless {...otherProps} />;
   }
 
   componentDidMount() {

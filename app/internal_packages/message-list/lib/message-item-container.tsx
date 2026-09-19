@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 import classNames from 'classnames';
 import React from 'react';
 import { Utils, DraftStore, ComponentRegistry, Thread, Message } from 'mailspring-exports';
@@ -103,7 +104,7 @@ export default class MessageItemContainer extends React.Component<
   _renderComposer() {
     const Composer = ComponentRegistry.findComponentsMatching({ role: 'Composer' })[0];
     if (!Composer) {
-      return <span>No Composer Component Present</span>;
+      return <span>{localized('No Composer Component Present')}</span>;
     }
     return (
       <Composer

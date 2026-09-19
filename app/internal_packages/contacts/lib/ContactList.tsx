@@ -42,7 +42,7 @@ const ContactColumn = new ListTabular.Column({
 
 class ContactsListEmpty extends React.Component<{ visible: boolean }> {
   render() {
-    return this.props.visible ? <div>No contacts to display</div> : <span />;
+    return this.props.visible ? <div>{localized('No contacts to display')}</div> : <span />;
   }
 }
 
@@ -233,7 +233,7 @@ const ContactListSearchWithData = (props: ContactListSearchWithDataProps) => {
         ref={searchEl}
         value={props.search}
         placeholder={`${localized('Search')} ${
-          props.perspective.type === 'unified' ? 'All Contacts' : props.perspective.label
+          props.perspective.type === 'unified' ? localized('All Contacts') : props.perspective.label
         }`}
         onChange={(e) => props.setSearch(e.currentTarget.value)}
       />

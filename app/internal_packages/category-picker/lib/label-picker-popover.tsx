@@ -77,12 +77,12 @@ export default class LabelPickerPopover extends Component<
     // Compile the search regex once and reuse it across the .filter below.
     const searchRe = Utils.wordSearchRegExp(searchValue);
     const categoryData = this._labels
-      .filter((label) => searchRe.test(label.displayName))
+      .filter((label) => searchRe.test(label.localizedDisplayName))
       .map<CategoryData>((label) => {
         return {
           id: label.id,
           category: label,
-          displayName: label.displayName,
+          displayName: label.localizedDisplayName,
           backgroundColor: LabelColorizer.backgroundColorDark(label),
           usage: threads.filter((t) => t.categories.find((c) => c.id === label.id)).length,
           numThreads: threads.length,
@@ -126,7 +126,10 @@ export default class LabelPickerPopover extends Component<
 
       TaskQueue.waitForPerformRemote(syncbackTask).then((finishedTask) => {
         if (!finishedTask.created) {
-          AppEnv.showErrorDialog({ title: 'Error', message: `Could not create label.` });
+          AppEnv.showErrorDialog({
+            title: localized('Error'),
+            message: localized('Could not create label.'),
+          });
           return;
         }
         Actions.queueTask(

@@ -1,3 +1,4 @@
+import { localized } from '../../intl';
 import MailspringStore from 'mailspring-store';
 
 import url from 'url';
@@ -147,7 +148,7 @@ class _IdentityStore extends MailspringStore {
 
       if (!this._displayedPasswordError) {
         this._displayedPasswordError = true;
-        AppEnv.showErrorDialog({ title: 'Please Sign In', message });
+        AppEnv.showErrorDialog({ title: localized('Please Sign In'), message });
       }
       this._identity = null;
     }

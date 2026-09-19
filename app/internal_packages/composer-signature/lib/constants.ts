@@ -64,7 +64,7 @@ export const DataShape = [
   {
     key: 'tintColor',
     label: localized('Theme Color'),
-    placeholder: 'ex: #419bf9, purple',
+    placeholder: localized('ex: #419bf9, purple'),
   },
 ];
 

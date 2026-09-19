@@ -1,4 +1,5 @@
 import { Task } from './task';
+import { localized } from '../../intl';
 import * as Attributes from '../attributes';
 import { AttributeValues } from '../models/model';
 
@@ -62,10 +63,12 @@ export class GetManyRFC2822Task extends Task {
     if (this.result && this.result.total) {
       const { exported, total, failed } = this.result;
       if (failed > 0) {
-        return `Exporting ${exported || 0} / ${total} (${failed} failed)`;
+        return localized('Exporting... %1$@ / %2$@ (%3$@ failed)', exported || 0, total, failed);
       }
-      return `Exporting ${exported || 0} / ${total}`;
+      return localized('Exporting... %1$@ / %2$@', exported || 0, total);
     }
-    return this.format === 'mbox' ? 'Exporting folder as mbox' : 'Exporting folder as .eml files';
+    return this.format === 'mbox'
+      ? localized('Exporting folder as mbox')
+      : localized('Exporting folder as .eml files');
   }
 }

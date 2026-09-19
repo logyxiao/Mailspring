@@ -1,3 +1,4 @@
+import { getLanguageDisplayName } from '../../../src/intl';
 import React, { useRef } from 'react';
 import {
   localized,
@@ -40,7 +41,7 @@ const TranslateComposerButtonInner: React.FC<Props> = ({ draft, session }) => {
         className="translate-language-picker"
         items={Object.keys(TranslatePopupOptions)}
         itemKey={(item) => item}
-        itemContent={(item) => item}
+        itemContent={(item) => getLanguageDisplayName(TranslatePopupOptions[item], item)}
         headerComponents={[<span key="header">{localized('Translate')}:</span>]}
         defaultSelectedIndex={-1}
         onSelect={onTranslate}

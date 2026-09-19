@@ -127,7 +127,7 @@ export default class PreferencesMcpAccounts extends React.Component<Props, State
                     checked={!isExcluded}
                     onChange={() => this._toggleFolder(account.id, cat.id)}
                   />
-                  {(cat as any).displayName || cat.name}
+                  {(cat as any).localizedDisplayName || cat.name}
                 </label>
               );
             })}

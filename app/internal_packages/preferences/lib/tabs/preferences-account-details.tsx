@@ -223,7 +223,10 @@ class PreferencesAccountDetails extends Component<
         `<div style="white-space: pre-wrap; font-family: monospace;">${result}</div>`
       );
     } catch (err) {
-      AppEnv.showErrorDialog({ title: 'Error', message: `Could not retrieve sync logs. ${err}` });
+      AppEnv.showErrorDialog({
+        title: localized('Error'),
+        message: `Could not retrieve sync logs. ${err}`,
+      });
       return;
     }
     const { BrowserWindow } = require('@electron/remote');
@@ -322,7 +325,7 @@ class PreferencesAccountDetails extends Component<
           onSaveChanges={this._saveChanges}
         />
         <h6>{localized('Aliases')}</h6>
-        <div className="platform-note">
+        <div className="platform-note" data-note-label={localized('Note:') + ' '}>
           {localized(
             'You may need to configure aliases with your mail provider (Outlook, Gmail) before using them.'
           )}

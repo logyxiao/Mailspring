@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 import os from 'os';
 import path from 'path';
 import fs from 'fs';
@@ -26,7 +27,7 @@ const FormErrorMessage = (props: FormErrorProps) => {
     };
     rawLogLink = (
       <a href="" onClick={onViewLog} style={{ paddingLeft: 5 }}>
-        View Log
+        {localized('View Log')}
       </a>
     );
   }

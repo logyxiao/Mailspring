@@ -9,8 +9,9 @@ const Notice = () =>
     <span />
   ) : (
     <div className="preview-notice">
-      Calendar is launching later this year! This preview is read-only and only supports Google
-      calendar.
+      {localized(
+        'Calendar is launching later this year! This preview is read-only and only supports Google calendar.'
+      )}
     </div>
   );
 

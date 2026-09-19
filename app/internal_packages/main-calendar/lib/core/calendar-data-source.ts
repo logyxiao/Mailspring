@@ -1,3 +1,4 @@
+import { localized } from '../../../../src/intl';
 import Rx from 'rx-lite';
 import {
   Event,
@@ -367,7 +368,7 @@ export function occurrencesForEvents(
             id: `${master.id}-e0`,
             accountId: master.accountId,
             calendarId: master.calendarId,
-            title: '(Error expanding event)',
+            title: localized('(Error expanding event)'),
             location: '',
             description: '',
             startDate,

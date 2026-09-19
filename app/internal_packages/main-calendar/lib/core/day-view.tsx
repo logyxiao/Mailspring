@@ -1,3 +1,4 @@
+import { localized } from '../../../../src/intl';
 /* eslint react/jsx-no-bind: 0 */
 import moment, { Moment } from 'moment-timezone';
 import classnames from 'classnames';
@@ -264,14 +265,14 @@ export class DayView extends React.Component<
             disabledViewButton={CalendarView.DAY}
           >
             <button key="today" className="btn" onClick={this._onClickToday}>
-              Today
+              {localized('Today')}
             </button>
           </HeaderControls>
 
           <div className="calendar-body-wrap">
             <div className="calendar-legend">
               <div className="date-label-legend" style={{ height: allDayBarHeight + 75 + 1 }}>
-                <span className="legend-text">All Day</span>
+                <span className="legend-text">{localized('All Day')}</span>
               </div>
               <div className="event-grid-legend-wrap" ref={this._legendWrapEl}>
                 <div className="event-grid-legend" style={{ height: totalHeight }}>

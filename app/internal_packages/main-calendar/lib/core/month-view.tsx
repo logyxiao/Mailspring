@@ -1,3 +1,4 @@
+import { localized } from '../../../../src/intl';
 import React from 'react';
 import moment, { Moment } from 'moment-timezone';
 import { InjectedComponentSet } from 'mailspring-component-kit';
@@ -198,7 +199,7 @@ export class MonthView extends React.Component<MailspringCalendarViewProps, Mont
             disabledViewButton={CalendarView.MONTH}
           >
             <button key="today" className="btn" onClick={this._onClickToday}>
-              Today
+              {localized('Today')}
             </button>
           </HeaderControls>
 

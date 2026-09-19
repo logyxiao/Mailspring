@@ -1,3 +1,4 @@
+import { getLanguageDisplayName } from '../../../src/intl';
 import { LRUCache } from 'lru-cache';
 import {
   QuotedHTMLTransformer,
@@ -23,7 +24,7 @@ export const TranslatePopupOptions = {
   Korean: 'ko',
 };
 
-export const AllLanguages = {
+const LanguageNames = {
   az: 'Azerbaijan',
   ml: 'Malayalam',
   sq: 'Albanian',
@@ -118,6 +119,10 @@ export const AllLanguages = {
   ja: 'Japanese',
   ms: 'Malay',
 };
+
+export const AllLanguages: Record<string, string> = Object.fromEntries(
+  Object.entries(LanguageNames).map(([code, name]) => [code, getLanguageDisplayName(code, name)])
+);
 
 export const TranslationsUsedLexicon: FeatureLexicon = {
   headerText: localized('All Translations Used'),

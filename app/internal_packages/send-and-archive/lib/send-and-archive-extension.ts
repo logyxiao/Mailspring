@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 import { Actions, Thread, DatabaseStore, TaskFactory, SendDraftTask } from 'mailspring-exports';
 
 export const name = 'SendAndArchiveExtension';
@@ -5,7 +6,7 @@ export const name = 'SendAndArchiveExtension';
 export function sendActions() {
   return [
     {
-      title: 'Send and Archive',
+      title: localized('Send and Archive'),
       iconUrl: 'mailspring://send-and-archive/images/composer-archive@2x.png',
       isAvailableForDraft({ draft }) {
         return draft.threadId;

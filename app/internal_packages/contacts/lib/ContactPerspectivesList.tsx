@@ -175,7 +175,7 @@ const ContactsPerspectivesWithData: React.FunctionComponent<ContactsPerspectives
       <OutlineViewItem
         item={{
           id: 'bla',
-          name: 'All Contacts',
+          name: localized('All Contacts'),
           iconName: 'people.png',
           children: [],
           selected: selected.type === 'unified',

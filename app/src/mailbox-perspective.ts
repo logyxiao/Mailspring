@@ -358,7 +358,7 @@ class CategoryMailboxPerspective extends MailboxPerspective {
 
     // Note: We pick the display name and icon assuming that you won't create a
     // perspective with Inbox and Sent or anything crazy like that... todo?
-    this.name = this._categories[0].displayName;
+    this.name = this._categories[0].localizedDisplayName;
     if (this._categories[0].role) {
       this.iconName = `${this._categories[0].role}.png`;
     } else {

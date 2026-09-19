@@ -43,6 +43,14 @@ npm start -- --lang=de
 
 ## Understanding the scripts
 
+- **check-localization.js**
+
+  - **Usage:** `npm run localization:check`
+  - Extracts static `localized()` and `localizedReactFragment()` keys from application source, including string concatenation.
+  - Checks that every source key exists in `en.json` and has an effective Simplified Chinese translation (`zh.json` plus `zh-CN.json`).
+  - Verifies positional placeholders and rejects dynamic translation keys. It does not modify any language files.
+  - This complements visual review: brand names, server responses, user content, and text that has not been connected to localization are outside this check.
+
 - **format-localizations.js**
 
   - **Usage:** `node scripts/format-localizations.js`

@@ -3,6 +3,7 @@ import { Menu } from 'mailspring-component-kit';
 
 interface TypeaheadFreeInputProps extends React.HTMLProps<HTMLInputElement> {
   suggestions: string[];
+  formatSuggestion?: (value: string) => string;
 }
 
 interface TypeaheadFreeInputState {
@@ -28,13 +29,16 @@ export class TypeaheadFreeInput extends React.Component<
   };
 
   render() {
-    const { suggestions, ...rest } = this.props;
+    const { suggestions, formatSuggestion = (item: string) => item, ...rest } = this.props;
     const { focused } = this.state;
 
-    let value = `${rest.value}`;
+    let value = `${rest.value || ''}`;
 
     const completions = suggestions.filter(
-      (text) => text.toLowerCase().startsWith(value.toLowerCase()) && text !== value
+      (text) =>
+        (text.toLowerCase().startsWith(value.toLowerCase()) ||
+          formatSuggestion(text).toLowerCase().startsWith(value.toLowerCase())) &&
+        text !== value
     );
 
     // Adopt capitalization of the autocompletion
@@ -47,7 +51,7 @@ export class TypeaheadFreeInput extends React.Component<
         ref={this._menu}
         items={focused ? completions : []}
         itemKey={(item) => item}
-        itemContent={(item) => item}
+        itemContent={(item) => formatSuggestion(item)}
         headerComponents={[
           <input
             key="input"
@@ -58,7 +62,12 @@ export class TypeaheadFreeInput extends React.Component<
               this._menu.current.onKeyDown(e);
             }}
             {...rest}
-            value={value}
+            value={formatSuggestion(value)}
+            onChange={(event) => {
+              const entered = event.currentTarget.value;
+              const canonical = suggestions.find((item) => formatSuggestion(item) === entered);
+              this.onSelectSuggestion(canonical || entered);
+            }}
           />,
         ]}
         onSelect={this.onSelectSuggestion}

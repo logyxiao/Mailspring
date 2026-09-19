@@ -1,3 +1,5 @@
+import { contactTypeLabel } from './contact-type-labels';
+import { localized } from '../../../src/intl';
 import React from 'react';
 import { Account, Contact, AccountStore, ContactGroup } from 'mailspring-exports';
 import { ContactProfilePhoto, RetinaImg } from 'mailspring-component-kit';
@@ -52,7 +54,13 @@ export const ContactDetailRead = ({
       {
         <ContactAttributes
           data={data}
-          origin={metadata.origin}
+          origin={
+            metadata.origin === 'Found in Sent Mail'
+              ? localized('Found in Sent Mail')
+              : metadata.origin === 'Google Contacts'
+                ? localized('Google Contacts')
+                : metadata.origin
+          }
           account={AccountStore.accountForId(contact.accountId)}
         />
       }
@@ -98,10 +106,10 @@ const ContactAttributes = ({
               <Icons.Envelope />
             </span>
             <div>
-              <a href={`mailto:${item.value}`} title="Send email...">
+              <a href={`mailto:${item.value}`} title={localized('Send email...')}>
                 {item.value}
               </a>
-              {item.type && <div className="type">{item.type}</div>}
+              {item.type && <div className="type">{contactTypeLabel(item.type)}</div>}
             </div>
           </div>
         ))}
@@ -115,10 +123,10 @@ const ContactAttributes = ({
               <Icons.Phone />
             </span>
             <div>
-              <a href={`tel:${item.value}`} title="Call...">
+              <a href={`tel:${item.value}`} title={localized('Call...')}>
                 {item.value}
               </a>
-              {item.type && <div className="type">{item.type}</div>}
+              {item.type && <div className="type">{contactTypeLabel(item.type)}</div>}
             </div>
           </div>
         ))}
@@ -135,7 +143,7 @@ const ContactAttributes = ({
               <a href={`https://maps.google.com/?q=${encodeURIComponent(item.formattedValue)}`}>
                 {item.formattedValue}
               </a>
-              {item.type && <div className="type">{item.type}</div>}
+              {item.type && <div className="type">{contactTypeLabel(item.type)}</div>}
             </div>
           </div>
         ))}
@@ -176,7 +184,7 @@ const ContactAttributes = ({
             </span>
             <div>
               {item.person}
-              {item.type && <div className="type">{item.type}</div>}
+              {item.type && <div className="type">{contactTypeLabel(item.type)}</div>}
             </div>
           </div>
         ))}
@@ -190,10 +198,10 @@ const ContactAttributes = ({
               <Icons.Link />
             </span>
             <div>
-              <a href={`${item.value}`} title="Visit website...">
+              <a href={`${item.value}`} title={localized('Visit website...')}>
                 {item.value}
               </a>
-              {item.type && <div className="type">{item.type}</div>}
+              {item.type && <div className="type">{contactTypeLabel(item.type)}</div>}
             </div>
           </div>
         ))}
@@ -210,7 +218,7 @@ const ContactAttributes = ({
       </div>
     )}
     <div className="contact-origin">
-      <div>{`${origin} (${account ? account.label : 'Unknown Account'})`}</div>
+      <div>{`${origin} (${account ? account.label : localized('Unknown Account')})`}</div>
     </div>
   </div>
 );

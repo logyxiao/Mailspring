@@ -1,4 +1,5 @@
 import React from 'react';
+import { localized } from '../intl';
 import Rx, { Disposable } from 'rx-lite';
 import { Flexbox } from 'mailspring-component-kit';
 
@@ -9,6 +10,7 @@ const SOURCE_SELECT_NULL = 'NULL';
 interface Item {
   value: string;
   name: string;
+  valueName?: string;
 }
 type SourceSelectProps = {
   value?: string;
@@ -68,7 +70,7 @@ class SourceSelect extends React.Component<SourceSelectProps, SourceSelectState>
     this.props.onChange({
       target: {
         value,
-        name: option ? option.name : undefined,
+        name: option ? option.valueName || option.name : undefined,
       },
     });
   };
@@ -204,7 +206,12 @@ export default class ScenarioEditorRow extends React.Component<ScenarioEditorRow
     const template = this.props.templates.find((t) => t.key === this.props.instance.templateKey);
     if (!template) {
       return (
-        <span> Could not find template for instance key: {this.props.instance.templateKey}</span>
+        <span>
+          {localized(
+            'Could not find template for instance key: %@',
+            this.props.instance.templateKey
+          )}
+        </span>
       );
     }
     return (

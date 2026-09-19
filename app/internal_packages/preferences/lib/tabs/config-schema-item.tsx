@@ -1,3 +1,4 @@
+import { localized } from '../../../../src/intl';
 import React from 'react';
 import _ from 'underscore';
 import _str from 'underscore.string';
@@ -46,7 +47,9 @@ class ConfigSchemaItem extends React.Component<ConfigSchemaItemProps> {
     if (this.props.configSchema.advanced) return false;
 
     const note = this.props.configSchema.note ? (
-      <div className="platform-note">{this.props.configSchema.note}</div>
+      <div className="platform-note" data-note-label={localized('Note:') + ' '}>
+        {this.props.configSchema.note}
+      </div>
     ) : null;
 
     if (this.props.configSchema.type === 'object') {

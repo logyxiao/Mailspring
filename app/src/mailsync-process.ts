@@ -165,7 +165,26 @@ export class MailsyncProcess extends EventEmitter {
     this._win.once('ready-to-show', () => {
       this._win.show();
     });
-    this._win.loadURL(`file://${this.resourcePath}/static/db-${mode}.html`);
+    const title =
+      mode === 'migration'
+        ? localized('Updating Mailspring Database...')
+        : localized('Preparing Mailspring...');
+    const message =
+      mode === 'migration'
+        ? localized('Mailspring is upgrading your email database and will start momentarily...')
+        : localized(
+            'Mailspring is optimizing your email database to save space and will start momentarily...'
+          );
+    const escapeHTML = (value: string) =>
+      value.replace(
+        /[&<>"']/g,
+        (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]
+      );
+    const html = fs
+      .readFileSync(path.join(this.resourcePath, 'static', `db-${mode}.html`), 'utf8')
+      .replace('__STATUS_TITLE__', () => escapeHTML(title))
+      .replace('__STATUS_MESSAGE__', () => escapeHTML(message));
+    this._win.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`);
   }
 
   _closeStatusWindow() {

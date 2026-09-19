@@ -75,8 +75,10 @@
       transition: background-color linear 150ms;
       background-color: mix(#ed304b, @background-primary, 75%);
       &::after {
-        transition: left linear 150ms, transform linear 150ms;
-        content: 'Trash';
+        transition:
+          left linear 150ms,
+          transform linear 150ms;
+        content: attr(data-trash-label);
         left: 0;
         background-image: url(../static/images/swipe/icon-swipe-trash@2x.png);
       }
@@ -94,8 +96,10 @@
       transition: background-color linear 150ms;
       background-color: mix(#6cd420, @background-primary, 75%);
       &::after {
-        transition: left linear 150ms, transform linear 150ms;
-        content: 'Archive';
+        transition:
+          left linear 150ms,
+          transform linear 150ms;
+        content: attr(data-archive-label);
         left: 0;
         background-image: url(../static/images/swipe/icon-swipe-archive@2x.png);
       }
@@ -112,8 +116,10 @@
       transition: background-color linear 150ms;
       background-color: mix(#8d6be3, @background-primary, 75%);
       &::after {
-        transition: right linear 150ms, transform linear 150ms;
-        content: 'Snooze';
+        transition:
+          right linear 150ms,
+          transform linear 150ms;
+        content: attr(data-snooze-label);
         right: 0;
         background-image: url(../static/images/swipe/icon-swipe-snooze@2x.png);
       }
@@ -336,13 +342,19 @@
     margin: 9px 12px 0 12px;
   }
   .action.action-archive {
-    background: url(@archive-img) center no-repeat, @background-gradient;
+    background:
+      url(@archive-img) center no-repeat,
+      @background-gradient;
   }
   .action.action-trash {
-    background: url(@trash-img) center no-repeat, @background-gradient;
+    background:
+      url(@trash-img) center no-repeat,
+      @background-gradient;
   }
   .action.action-snooze {
-    background: url(@snooze-img) center no-repeat, @background-gradient;
+    background:
+      url(@snooze-img) center no-repeat,
+      @background-gradient;
   }
 }
 body.platform-win32 {
@@ -556,7 +568,7 @@ body.is-blurred {
   height: 100%;
   width: 100%;
   border-top: 1px solid @border-color-divider;
-  .sheet-toolbar { 
+  .sheet-toolbar {
     -webkit-app-region: none;
   }
 }

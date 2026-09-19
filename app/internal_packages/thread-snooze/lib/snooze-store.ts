@@ -65,7 +65,7 @@ class _SnoozeStore extends MailspringStore {
       if (error instanceof FeatureUsageStore.NoProAccessError) {
         return;
       }
-      moveThreads(threads, { snooze: false, description: 'Unsnoozed' });
+      moveThreads(threads, { snooze: false, description: localized('Unsnoozed') });
       Actions.closePopover();
       AppEnv.reportError(error);
       AppEnv.showErrorDialog(
@@ -76,7 +76,7 @@ class _SnoozeStore extends MailspringStore {
 
   _onUnsnoozeThreads = (threads: Thread[]) => {
     // move the threads back to the inbox
-    moveThreads(threads, { snooze: false, description: 'Unsnoozed' });
+    moveThreads(threads, { snooze: false, description: localized('Unsnoozed') });
 
     // mark the threads unread if setting is enabled
     markUnreadOrResurfaceThreads(threads, localized('Unsnoozed message'));

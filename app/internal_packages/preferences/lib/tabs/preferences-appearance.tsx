@@ -104,7 +104,11 @@ class MenubarStylePicker extends React.Component<{ config: ConfigLike }> {
             </label>
           </div>
         ))}
-        <div className="platform-note" style={{ lineHeight: '23px' }}>
+        <div
+          className="platform-note"
+          data-note-label={localized('Note:') + ' '}
+          style={{ lineHeight: '23px' }}
+        >
           <div
             className="btn btn-small"
             style={{ float: 'right' }}
@@ -368,7 +372,7 @@ class PreferencesAppearance extends React.Component<{ config: ConfigLike; config
         <section>
           <h6>{localized('Scaling')}</h6>
           <AppearanceScaleSlider id="change-scale" config={this.props.config} />
-          <div className="platform-note">
+          <div className="platform-note" data-note-label={localized('Note:') + ' '}>
             {localized(
               'Scaling adjusts the entire UI, including icons, dividers, and text. Messages you send will still have the same font size. Decreasing scale significantly may make dividers and icons too small to click.'
             )}

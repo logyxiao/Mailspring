@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 import fs from 'fs';
 
 import React from 'react';
@@ -202,7 +203,9 @@ export default class MessageItemBody extends React.Component<
           body={this.props.message.body || ''}
           onClick={this._onToggleQuotedText}
         />
-        {this.state.clipped && <a onClick={this._onShowClipped}>[Message Clipped - Show All]</a>}
+        {this.state.clipped && (
+          <a onClick={this._onShowClipped}>{localized('[Message Clipped - Show All]')}</a>
+        )}
       </span>
     );
   }

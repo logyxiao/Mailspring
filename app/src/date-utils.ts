@@ -1,7 +1,8 @@
+import { getCurrentLocale } from './intl';
 import moment, { Moment } from 'moment-timezone';
 
 // Init locale for moment
-moment.locale(navigator.language);
+moment.locale(getCurrentLocale() || navigator.language);
 
 // Initialise moment timezone
 const tz = moment.tz.guess();

@@ -97,7 +97,7 @@ export default class MovePickerPopover extends Component<
           // remove categories that are part of the current perspective or locked
           !hidden.includes(cat.role) && !currentCategoryIds.includes(cat.id)
       )
-      .filter((cat) => searchRe.test(cat.displayName))
+      .filter((cat) => searchRe.test(cat.localizedDisplayName))
       .map((cat) => {
         if (cat.divider) {
           return cat;
@@ -105,7 +105,7 @@ export default class MovePickerPopover extends Component<
         return {
           id: cat.id,
           category: cat,
-          displayName: cat.displayName,
+          displayName: cat.localizedDisplayName,
           backgroundColor: LabelColorizer.backgroundColorDark(cat),
         };
       });
@@ -156,7 +156,10 @@ export default class MovePickerPopover extends Component<
 
     TaskQueue.waitForPerformRemote(syncbackTask).then((finishedTask) => {
       if (!finishedTask.created) {
-        AppEnv.showErrorDialog({ title: 'Error', message: localized(`Could not create folder.`) });
+        AppEnv.showErrorDialog({
+          title: localized('Error'),
+          message: localized(`Could not create folder.`),
+        });
         return;
       }
       this._onMoveToCategory({ category: finishedTask.created });

@@ -1,3 +1,4 @@
+import { localized } from '../../../src/intl';
 // # Phishing Detection
 //
 // This is a simple package to notify N1 users if an email is a potential
@@ -29,7 +30,7 @@ class PhishingIndicator extends React.Component<{ thread: object }> {
     if (from !== null && reply_to !== null) {
       return (
         <div className="phishingIndicator">
-          <strong>This message looks suspicious!</strong>
+          <strong>{localized('This message looks suspicious!')}</strong>
           <p>{`It originates from ${from} but replies will go to ${reply_to}`}</p>
         </div>
       );

@@ -81,13 +81,17 @@ export class ChangeLabelsTask extends ChangeMailTask {
     }
     if (this.labelsToAdd.length === 1 && this.labelsToRemove.length === 0) {
       return this.threadIds.length > 1
-        ? localized(`Added %@ to %@ threads`, added.displayName, this.threadIds.length)
-        : localized(`Added %@`, added.displayName);
+        ? localized(`Added %@ to %@ threads`, added.localizedDisplayName, this.threadIds.length)
+        : localized(`Added %@`, added.localizedDisplayName);
     }
     if (this.labelsToAdd.length === 0 && this.labelsToRemove.length === 1) {
       return this.threadIds.length > 1
-        ? localized(`Removed %@ from %@ threads`, removed.displayName, this.threadIds.length)
-        : localized(`Removed %@`, removed.displayName);
+        ? localized(
+            `Removed %@ from %@ threads`,
+            removed.localizedDisplayName,
+            this.threadIds.length
+          )
+        : localized(`Removed %@`, removed.localizedDisplayName);
     }
     return this.threadIds.length > 1
       ? localized(`Changed labels on %@ threads`, this.threadIds.length)
