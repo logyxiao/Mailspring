@@ -76,6 +76,9 @@ describe('Silent read subject policy', () => {
       expect(task instanceof ChangeUnreadTask).toBe(true);
       expect(task.messageIds).toEqual([id]);
       expect(task.threadIds).toEqual([]);
+      const wireTask = JSON.parse(JSON.stringify(task));
+      expect(wireTask.messageIds).toEqual([id]);
+      expect(Object.prototype.hasOwnProperty.call(wireTask, 'threadIds')).toBe(false);
       expect(task.unread).toBe(false);
       expect(task.canBeUndone).toBe(false);
       expect(task.accountId).toBe(index === 0 ? 'account-a' : 'account-b');

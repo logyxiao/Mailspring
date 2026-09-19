@@ -63,6 +63,17 @@ export class ChangeMailTask extends Task {
 
   // Task lifecycle
 
+  toJSON() {
+    const json = super.toJSON();
+    // Mailsync selects by threadIds whenever that key is present, even if the
+    // array is empty. Omit it for message-scoped tasks or the engine silently
+    // operates on zero messages and still reports the task as complete.
+    if (json.messageIds?.length && !json.threadIds?.length) {
+      delete json.threadIds;
+    }
+    return json;
+  }
+
   createUndoTask(): this {
     if (this.isUndo) {
       throw new Error(
