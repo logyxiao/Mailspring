@@ -12,6 +12,7 @@ import {
 import MailspringProviderSettings from './mailspring-provider-settings.json';
 import MailcoreProviderSettings from './mailcore-provider-settings.json';
 import dns from 'dns';
+import { isQQMailAccount, prepareQQAccount } from './qq-mail-settings';
 import {
   GMAIL_CLIENT_ID,
   GMAIL_CLIENT_SECRET,
@@ -104,6 +105,9 @@ function applyContainerFolderDefault(populated: Account) {
 }
 
 export async function expandAccountWithCommonSettings(account: Account) {
+  // Personal QQ accounts must not fall through to enterprise MX templates or
+  // third-party autoconfig. Both protocols use the same client authorization code.
+  if (isQQMailAccount(account)) return applyContainerFolderDefault(prepareQQAccount(account));
   const domain = account.emailAddress.split('@').pop().toLowerCase();
   const mxRecords = await mxRecordsForDomain(domain);
   const populated = account.clone();

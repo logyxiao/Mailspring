@@ -4,6 +4,8 @@ const FormField = (props: {
   field: string;
   title: string;
   type?: string;
+  placeholder?: string;
+  autoComplete?: string;
   style?: React.CSSProperties;
   submitting?: boolean;
   onFieldKeyPress?: (e: React.KeyboardEvent) => void;
@@ -24,7 +26,10 @@ const FormField = (props: {
         type={props.type || 'text'}
         id={props.field}
         style={props.style}
-        className={val && props.errorFieldNames.includes(props.field) ? 'error' : ''}
+        className={val && props.errorFieldNames?.includes(props.field) ? 'error' : ''}
+        placeholder={props.placeholder}
+        autoComplete={props.autoComplete}
+        aria-invalid={props.errorFieldNames?.includes(props.field) || undefined}
         disabled={props.submitting}
         spellCheck={false}
         value={val || ''}

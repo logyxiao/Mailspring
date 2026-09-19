@@ -12,7 +12,16 @@ export default class AccountChoosePage extends React.Component<{ account?: objec
       <div
         key={provider}
         className={`provider ${provider}`}
+        role="button"
+        tabIndex={0}
+        aria-label={displayName}
         onClick={() => OnboardingActions.chooseAccountProvider(provider)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            OnboardingActions.chooseAccountProvider(provider);
+          }
+        }}
       >
         <div className="icon-container">
           <RetinaImg name={icon} mode={RetinaImg.Mode.ContentPreserve} className="icon" />

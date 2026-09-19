@@ -1590,5 +1590,18 @@
   "Only replying emails whose matched replies involve at least two distinct sending email addresses are kept. This filter applies to correspondent statistics, reply details, unmatched replies and all averages.": "Only replying emails whose matched replies involve at least two distinct sending email addresses are kept. This filter applies to correspondent statistics, reply details, unmatched replies and all averages.",
   "Excluded Single-Account Replying Emails": "Excluded Single-Account Replying Emails",
   "Matched Replies Removed by Account Filter": "Matched Replies Removed by Account Filter",
-  "Unmatched Replies Removed by Account Filter": "Unmatched Replies Removed by Account Filter"
+  "Unmatched Replies Removed by Account Filter": "Unmatched Replies Removed by Account Filter",
+  "QQ Mail": "QQ Mail",
+  "Use your QQ email address and client authorization code. Enable IMAP/SMTP in QQ Mail settings first; your QQ login password will not work.": "Use your QQ email address and client authorization code. Enable IMAP/SMTP in QQ Mail settings first; your QQ login password will not work.",
+  "How to get an authorization code": "How to get an authorization code",
+  "Enter a QQ number or a full qq.com / foxmail.com email address.": "Enter a QQ number or a full qq.com / foxmail.com email address.",
+  "QQ Email / QQ Number": "QQ Email / QQ Number",
+  "QQ number or name@qq.com": "QQ number or name@qq.com",
+  "Authorization Code": "Authorization Code",
+  "Paste the client authorization code from QQ Mail": "Paste the client authorization code from QQ Mail",
+  "Sender Name (Optional)": "Sender Name (Optional)",
+  "Could not prepare account settings. Please check your connection and try again.": "Could not prepare account settings. Please check your connection and try again.",
+  "QQ Mail rejected the credentials. Check your full email address, enable IMAP/SMTP in QQ Mail, and use a current client authorization code instead of your QQ password.": "QQ Mail rejected the credentials. Check your full email address, enable IMAP/SMTP in QQ Mail, and use a current client authorization code instead of your QQ password.",
+  "QQ Mail requires IMAP/SMTP access and a client authorization code.": "QQ Mail requires IMAP/SMTP access and a client authorization code.",
+  "Advanced Settings": "Advanced Settings"
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccountStore } from 'mailspring-exports';
+import { AccountStore, localized } from 'mailspring-exports';
 import { RetinaImg } from 'mailspring-component-kit';
 import * as OnboardingActions from './onboarding-actions';
 
@@ -24,9 +24,15 @@ const PageTopBar = (props: { pageDepth: number; allowMoveBack?: boolean }) => {
   };
 
   let backButton = (
-    <div className={closeClass} onClick={closeAction}>
-      <RetinaImg name={closeIcon} mode={RetinaImg.Mode.ContentPreserve} />
-    </div>
+    <button
+      type="button"
+      className={`${closeClass} onboarding-nav-button`}
+      aria-label={pageDepth > 1 ? localized('Back') : localized('Close Window')}
+      onClick={closeAction}
+      style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
+    >
+      <RetinaImg name={closeIcon} mode={RetinaImg.Mode.ContentPreserve} alt="" />
+    </button>
   );
   if (props.pageDepth > 1 && !props.allowMoveBack) {
     backButton = null;

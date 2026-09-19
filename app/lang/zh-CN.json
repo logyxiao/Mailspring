@@ -1590,5 +1590,18 @@
   "Only replying emails whose matched replies involve at least two distinct sending email addresses are kept. This filter applies to correspondent statistics, reply details, unmatched replies and all averages.": "仅保留已配对回复涉及至少两个不同发件邮箱的回复邮箱。按邮箱统计、回复明细、未配对回信及全部平均值均采用相同筛选范围。",
   "Excluded Single-Account Replying Emails": "排除的单发件账号回复邮箱数",
   "Matched Replies Removed by Account Filter": "账号筛选排除的已配对回信数",
-  "Unmatched Replies Removed by Account Filter": "账号筛选排除的未配对回信数"
+  "Unmatched Replies Removed by Account Filter": "账号筛选排除的未配对回信数",
+  "QQ Mail": "QQ 邮箱",
+  "Use your QQ email address and client authorization code. Enable IMAP/SMTP in QQ Mail settings first; your QQ login password will not work.": "输入 QQ 邮箱和客户端授权码即可连接。请先在 QQ 邮箱设置中开启 IMAP/SMTP 服务；此处不能使用 QQ 登录密码。",
+  "How to get an authorization code": "如何获取授权码",
+  "Enter a QQ number or a full qq.com / foxmail.com email address.": "请输入 QQ 号码，或完整的 qq.com / foxmail.com 邮箱地址。",
+  "QQ Email / QQ Number": "QQ 邮箱／QQ 号码",
+  "QQ number or name@qq.com": "QQ 号码或 name@qq.com",
+  "Authorization Code": "授权码",
+  "Paste the client authorization code from QQ Mail": "粘贴 QQ 邮箱生成的客户端授权码",
+  "Sender Name (Optional)": "发件人名称（选填）",
+  "Could not prepare account settings. Please check your connection and try again.": "无法准备账号设置，请检查网络后重试。",
+  "QQ Mail rejected the credentials. Check your full email address, enable IMAP/SMTP in QQ Mail, and use a current client authorization code instead of your QQ password.": "QQ 邮箱验证失败。请确认邮箱地址正确，已开启 IMAP/SMTP 服务，并填写当前有效的客户端授权码，而不是 QQ 登录密码。",
+  "QQ Mail requires IMAP/SMTP access and a client authorization code.": "请在 QQ 邮箱开启 IMAP/SMTP 服务，并使用客户端授权码连接。",
+  "Advanced Settings": "高级设置"
 }

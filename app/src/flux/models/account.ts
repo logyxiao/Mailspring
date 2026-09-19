@@ -3,6 +3,7 @@ import * as Attributes from '../attributes';
 import { ModelWithMetadata } from './model-with-metadata';
 import { AttributeValues } from './model';
 import { MailsyncProcessExit } from 'mailspring-exports';
+import { localized } from '../../intl';
 
 let CategoryStore = null;
 let Contact = null;
@@ -208,6 +209,8 @@ export class Account extends ModelWithMetadata {
       return 'Office 365';
     } else if (this.provider === 'outlook') {
       return 'Outlook';
+    } else if (this.provider === 'qq') {
+      return localized('QQ Mail');
     }
     return this.provider;
   }

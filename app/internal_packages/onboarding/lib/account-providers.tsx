@@ -2,6 +2,14 @@ import { localized, localizedReactFragment, React } from 'mailspring-exports';
 
 const AccountProviders = [
   {
+    provider: 'qq',
+    displayName: localized('QQ Mail'),
+    displayNameShort: localized('QQ Mail'),
+    icon: 'ic-settings-account-imap.png',
+    headerIcon: 'setup-icon-provider-imap.png',
+    color: '#3698D9',
+  },
+  {
     provider: 'gmail',
     displayName: 'Gmail or G Suite',
     icon: 'ic-settings-account-gmail.png',

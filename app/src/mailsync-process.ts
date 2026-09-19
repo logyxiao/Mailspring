@@ -340,6 +340,7 @@ export class MailsyncProcess extends EventEmitter {
               msg = `${msg} ${response.error_advice}`;
             }
             const error = new Error(msg);
+            (error as any).errorCode = response.error;
             (error as any).rawLog = this._stripSecrets(response.log);
             (error as any).errorAdvice = response.error_advice || null;
             (error as any).errorService = response.error_service || null;

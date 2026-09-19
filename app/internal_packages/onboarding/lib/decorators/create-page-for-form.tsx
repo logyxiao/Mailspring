@@ -8,6 +8,13 @@ import * as OnboardingActions from '../onboarding-actions';
 import { finalizeAndValidateAccount } from '../onboarding-helpers';
 import FormErrorMessage from '../form-error-message';
 import AccountProviders from '../account-providers';
+import {
+  isQQMailAccount,
+  isQQMailAddress,
+  normalizeQQEmail,
+  normalizeQQAuthorizationCode,
+  QQ_MAIL_HELP_URL,
+} from '../qq-mail-settings';
 
 let didWarnAboutGmailIMAP = false;
 
@@ -27,6 +34,7 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
     static displayName = FormComponent.displayName;
 
     _formEl: HTMLFormElement;
+    _unmounted = false;
 
     constructor(props) {
       super(props);
@@ -45,6 +53,10 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
       this._applyFocus();
     }
 
+    componentWillUnmount() {
+      this._unmounted = true;
+    }
+
     componentDidUpdate() {
       this._applyFocus();
     }
@@ -59,6 +71,12 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
         (ReactDOM.findDOMNode(this) as HTMLElement).querySelectorAll('input')
       );
       if (inputs.length === 0) {
+        return;
+      }
+
+      const invalidInput = inputs.find((input) => this.state.errorFieldNames.includes(input.id));
+      if (invalidInput && !invalidInput.disabled) {
+        invalidInput.focus();
         return;
       }
 
@@ -87,7 +105,16 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
         val = event.target.checked;
       }
       if (event.target.id === 'emailAddress') {
-        val = `${val}`.trim();
+        val =
+          next.provider === 'qq' || isQQMailAddress(`${val}`)
+            ? normalizeQQEmail(`${val}`)
+            : `${val}`.trim();
+      }
+      if (
+        isQQMailAccount(next) &&
+        ['settings.imap_password', 'settings.smtp_password'].includes(event.target.id)
+      ) {
+        val = normalizeQQAuthorizationCode(`${val}`);
       }
 
       if (event.target.id.includes('.')) {
@@ -111,11 +138,22 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
       );
     };
 
-    onSubmit = () => {
+    onSubmit = async () => {
+      if (this.state.submitting || !this._isValid()) return;
       OnboardingActions.setAccount(this.state.account);
       if (this._formEl.submit) {
         this.setState({ submitting: true });
-        this._formEl.submit();
+        try {
+          await this._formEl.submit();
+        } catch (err) {
+          if (!this._unmounted)
+            this.setState({
+              submitting: false,
+              errorMessage: localized(
+                'Could not prepare account settings. Please check your connection and try again.'
+              ),
+            });
+        }
       } else {
         this.onConnect();
       }
@@ -126,6 +164,7 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
         return;
       }
       if (['Enter', 'Return'].includes(event.key)) {
+        event.preventDefault();
         this.onSubmit();
       }
     };
@@ -136,6 +175,7 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
     };
 
     onConnect = (updatedAccount?: Account) => {
+      if (this._unmounted) return;
       const account = updatedAccount || this.state.account;
       const providerConfig = AccountProviders.find(({ provider }) => provider === account.provider);
 
@@ -166,16 +206,18 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
 
       finalizeAndValidateAccount(account)
         .then((validated) => {
+          if (this._unmounted) return;
           OnboardingActions.moveToPage('account-onboarding-success');
           OnboardingActions.finishAndAddAccount(validated);
         })
         .catch((err) => {
+          if (this._unmounted) return;
           // If we're connecting from the `basic` settings page with an IMAP account,
           // the settings are from a template. If authentication fails, move the user
           // to the full settings since our guesses may have been wrong.
           // TODO: Potentially show Authentication Errors on this simple screen?
           const isBasicForm = FormComponent.displayName === 'AccountBasicSettingsForm';
-          if (account.provider === 'imap' && isBasicForm) {
+          if (account.provider === 'imap' && isBasicForm && !isQQMailAccount(account)) {
             // Advice means a rejected TLS handshake, which "Allow insecure SSL" fixes.
             // Both services, since an IMAP failure short-circuits before SMTP is tested.
             if (err.errorAdvice) {
@@ -188,8 +230,16 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
             return;
           }
           const errorFieldNames = [];
-          if (err.message.includes('Authentication Error')) {
-            if (/smtp/i.test(err.message)) {
+          const authenticationError =
+            err.errorCode === 'ErrorAuthentication' ||
+            err.statusCode === 401 ||
+            /authentication|invalid.*(?:password|credential)|登录失败|认证失败/i.test(
+              err.message || ''
+            );
+          if (authenticationError) {
+            if (isBasicForm && isQQMailAccount(account)) {
+              errorFieldNames.push('settings.imap_password');
+            } else if (err.errorService === 'smtp' || /smtp/i.test(err.message)) {
               errorFieldNames.push('settings.smtp_username');
               errorFieldNames.push('settings.smtp_password');
             } else {
@@ -198,7 +248,7 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
             }
           }
 
-          if (providerConfig.note) {
+          if (providerConfig?.note) {
             const node = document.createElement('div');
             ReactDOM.render(providerConfig.note, node);
             let note = node.innerText;
@@ -209,8 +259,13 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
             err.rawLog = note + '\n\n' + err.rawLog;
           }
           this.setState({
-            errorMessage: err.message,
-            errorStatusCode: err.statusCode,
+            errorMessage:
+              isQQMailAccount(account) && authenticationError
+                ? localized(
+                    'QQ Mail rejected the credentials. Check your full email address, enable IMAP/SMTP in QQ Mail, and use a current client authorization code instead of your QQ password.'
+                  )
+                : err.message,
+            errorStatusCode: authenticationError ? 401 : err.statusCode,
             errorLog: err.rawLog,
             errorFieldNames,
             submitting: false,
@@ -225,7 +280,11 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
       // We're not on the last page.
       if (submitting) {
         return (
-          <button className="btn btn-large btn-disabled btn-add-account spinning">
+          <button
+            type="button"
+            disabled
+            className="btn btn-large btn-disabled btn-add-account spinning"
+          >
             <RetinaImg
               name="sending-spinner.gif"
               width={15}
@@ -239,14 +298,22 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
 
       if (!this._isValid()) {
         return (
-          <button className="btn btn-large btn-gradient btn-disabled btn-add-account">
+          <button
+            type="button"
+            disabled
+            className="btn btn-large btn-gradient btn-disabled btn-add-account"
+          >
             {buttonLabel}
           </button>
         );
       }
 
       return (
-        <button className="btn btn-large btn-gradient btn-add-account" onClick={this.onSubmit}>
+        <button
+          type="button"
+          className="btn btn-large btn-gradient btn-add-account"
+          onClick={this.onSubmit}
+        >
           {buttonLabel}
         </button>
       );
@@ -262,7 +329,10 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
       }
       let message;
       let articleURL;
-      if (account.emailAddress.includes('@yahoo.com')) {
+      if (isQQMailAccount(account)) {
+        message = localized('QQ Mail requires IMAP/SMTP access and a client authorization code.');
+        articleURL = QQ_MAIL_HELP_URL;
+      } else if (account.emailAddress.includes('@yahoo.com')) {
         message = localized('Have you enabled access through Yahoo?');
         articleURL = 'https://getmailspring.com/docs/adding-a-yahoo-account';
       } else {
@@ -296,12 +366,22 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
       }
 
       const hideTitle = errorMessage && errorMessage.length > 120;
+      const compactQQLogo =
+        isQQMailAccount(account) && FormComponent.displayName === 'AccountBasicSettingsForm';
 
       return (
-        <div className={`page account-setup ${FormComponent.displayName}`}>
+        <div
+          className={`page account-setup ${FormComponent.displayName} ${
+            isQQMailAccount(account) ? 'qq-mail-setup' : ''
+          }`}
+        >
           <div className="logo-container">
             <RetinaImg
-              style={{ backgroundColor: providerConfig.color, borderRadius: 44 }}
+              style={{
+                backgroundColor: providerConfig.color,
+                borderRadius: 44,
+                ...(compactQQLogo ? { width: 80, height: 80 } : {}),
+              }}
               name={providerConfig.headerIcon}
               mode={RetinaImg.Mode.ContentPreserve}
               className="logo"
@@ -310,12 +390,12 @@ const CreatePageForForm = (FormComponent: React.ComponentType<any> & Record<stri
           {hideTitle ? (
             <div style={{ height: 20 }} />
           ) : (
-            <h2>{FormComponent.titleLabel(providerConfig)}</h2>
+            <h2>{FormComponent.titleLabel(providerConfig, account)}</h2>
           )}
           <FormErrorMessage
             log={errorLog}
             message={errorMessage}
-            empty={FormComponent.subtitleLabel(providerConfig)}
+            empty={FormComponent.subtitleLabel(providerConfig, account)}
           />
           {this._renderCredentialsNote()}
           <FormComponent

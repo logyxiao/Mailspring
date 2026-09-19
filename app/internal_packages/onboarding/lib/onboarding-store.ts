@@ -9,6 +9,7 @@ import { ipcRenderer } from 'electron';
 import MailspringStore from 'mailspring-store';
 
 import * as OnboardingActions from './onboarding-actions';
+import { isQQMailAccount } from './qq-mail-settings';
 
 class OnboardingStore extends MailspringStore {
   _account: Account;
@@ -45,6 +46,8 @@ class OnboardingStore extends MailspringStore {
         this._pageStack = ['account-choose', 'account-settings-o365'];
       } else if (this._account.provider === 'outlook') {
         this._pageStack = ['account-choose', 'account-settings-outlook'];
+      } else if (isQQMailAccount(this._account)) {
+        this._pageStack = ['account-choose', 'account-settings'];
       } else if (this._account.provider === 'imap') {
         this._pageStack = ['account-choose', 'account-settings', 'account-settings-imap'];
       } else {

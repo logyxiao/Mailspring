@@ -90,6 +90,20 @@
     margin-bottom: 14px;
   }
 
+  .onboarding-nav-button {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+    padding: 4px;
+    min-width: 28px;
+    min-height: 28px;
+    &:focus-visible {
+      outline: 2px solid @accent-primary;
+      outline-offset: 1px;
+    }
+  }
+
   .close {
     position: fixed;
     z-index: 100;
@@ -302,6 +316,18 @@
 }
 
 .page.account-setup {
+  .qq-server-settings {
+    border: 0;
+    background: transparent;
+    color: @accent-primary-dark;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 8px;
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
   form {
     width: 400px;
     padding-top: 20px;
@@ -353,6 +379,14 @@
   .col-heading {
     text-align: left;
     padding-bottom: 10px;
+  }
+}
+
+.page.account-setup.AccountBasicSettingsForm.qq-mail-setup {
+  .logo-container {
+    width: 80px;
+    height: 80px;
+    padding-top: 24px;
   }
 }
 

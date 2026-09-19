@@ -3,6 +3,7 @@ import React from 'react';
 import { localized, Account } from 'mailspring-exports';
 import CreatePageForForm from './decorators/create-page-for-form';
 import FormField from './form-field';
+import { isQQMailAccount } from './qq-mail-settings';
 
 const StandardIMAPPorts = [143, 993];
 const StandardSMTPPorts = [25, 465, 587];
@@ -218,7 +219,11 @@ class AccountIMAPSettingsForm extends React.Component<AccountIMAPSettingsFormPro
         />
         <FormField
           field={`settings.${type}_password`}
-          title={localized('Password')}
+          title={
+            isQQMailAccount(this.props.account)
+              ? localized('Authorization Code')
+              : localized('Password')
+          }
           type="password"
           {...this.props}
         />
