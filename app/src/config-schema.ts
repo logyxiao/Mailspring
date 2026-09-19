@@ -127,6 +127,11 @@ export default {
       reading: {
         type: 'object',
         properties: {
+          silentReadSubjectKeywords: {
+            type: 'array',
+            default: [],
+            items: { type: 'string' },
+          },
           markAsReadDelay: {
             type: 'integer',
             default: 500,

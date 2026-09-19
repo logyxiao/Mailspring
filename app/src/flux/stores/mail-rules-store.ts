@@ -12,6 +12,8 @@ import { localized } from '../../intl';
 import { Template } from '../../components/scenario-editor-models';
 import { ConditionMode, ConditionTemplates, ActionTemplates } from '../../mail-rules-templates';
 import { DatabaseChangeRecord } from 'mailspring-exports';
+import { ChangeUnreadTask } from '../tasks/change-unread-task';
+import { shouldSilentlyReadSubject } from '../../silent-read-policy';
 
 const RulesJSONKey = 'MailRules-V2';
 const AutoSinceJSONKey = 'MailRules-Auto-Since';
@@ -103,6 +105,31 @@ class MailRulesStore extends MailspringStore {
 
   _onDatabaseChanged = (record: DatabaseChangeRecord<Message>) => {
     if (record.type !== 'persist' || record.objectClass !== Message.name) return;
+
+    // Subject-only policies can run as soon as headers arrive, independently of
+    // notification preferences and without waiting for the message body.
+    const headerIds = new Set(
+      record.objectsRawJSON.filter((json) => json.headersSyncComplete).map((json) => json.id)
+    );
+    for (const message of record.objects) {
+      if (
+        headerIds.has(message.id) &&
+        !message.draft &&
+        message.unread === true &&
+        message.date &&
+        message.date.valueOf() > this._autoSince &&
+        shouldSilentlyReadSubject(message.subject)
+      ) {
+        Actions.queueTask(
+          new ChangeUnreadTask({
+            messages: [message],
+            unread: false,
+            canBeUndone: false,
+            source: 'Silent Read Subject Policy',
+          })
+        );
+      }
+    }
 
     // Note: Mailsync processes incoming new emails in two phases. First it fetches the
     // message metadata (headers, etc.) and then it fetches the body separately. We want

@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import { shouldSilentlyReadSubject } from '../../../src/silent-read-policy';
 import {
   Thread,
   Actions,
@@ -58,6 +59,8 @@ export class Notifier {
     for (const msg of msgs) {
       // ensure the message is unread
       if (msg.unread !== true) continue;
+      // Suppress both banners and sounds before auto-read has reached the database.
+      if (shouldSilentlyReadSubject(msg.subject)) continue;
       // ensure the message was just created (eg: this is not a modification).
       // The sync engine attaches a JSON key to let us know that this is the first
       // message emitted about this Message. (Hooray hacks around reactive patterns)
