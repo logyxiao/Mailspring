@@ -46,6 +46,10 @@ module.exports = {
       label: localized('File'),
       submenu: [
         { label: localized('Sync New Mail Now'), command: 'window:sync-mail-now' },
+        {
+          label: localized('Export Sent Recipients by Article') + '...',
+          command: 'window:export-sent-recipients',
+        },
         { type: 'separator' },
         { label: localized('New Message'), command: 'application:new-message' },
         { type: 'separator' },

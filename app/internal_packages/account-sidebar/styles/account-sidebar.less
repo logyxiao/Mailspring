@@ -10,6 +10,11 @@
     opacity: 0.5;
   }
 
+  // Keep the standard mailbox section; hide the per-account folder sections.
+  .account-sidebar-sections > .outline-view ~ .outline-view {
+    display: none;
+  }
+
   .outline-view:first-child {
     .heading span {
       margin-right: 30px;
