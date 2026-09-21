@@ -51,6 +51,7 @@ const subject = function (subj: string) {
 };
 
 const getSnippet = function (thread: ThreadWithMessagesMetadata) {
+  if (thread.humanReplyPreview) return thread.humanReplyPreview.snippet;
   const messages = thread.__messages || [];
   if (messages.length === 0) {
     return thread.snippet;
@@ -122,7 +123,7 @@ const c3 = new ListTabular.Column({
       <span className="details">
         <MailLabelSet thread={thread} />
         <span className="subject" dir="auto">
-          {subject(thread.subject)}
+          {subject(thread.humanReplyPreview?.subject ?? thread.subject)}
         </span>
         <span className="snippet" dir="auto">
           {getSnippet(thread)}
@@ -227,7 +228,7 @@ const cNarrow = new ListTabular.Column({
             />
           </div>
           <div className="subject" dir="auto">
-            {subject(thread.subject)}
+            {subject(thread.humanReplyPreview?.subject ?? thread.subject)}
           </div>
           <div className="snippet-and-labels">
             <div className="snippet" dir="auto">

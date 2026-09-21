@@ -1,4 +1,6 @@
 {
+  "Human Replies": "人工回复",
+  "No human replies in the inbox": "收件箱中暂无人工回复",
   " On Linux, Mailspring stores passwords in your desktop keyring (KWallet, GNOME Keyring, or another Secret Service provider). Please make sure it is installed, running, and unlocked, then restart Mailspring.": " 在 Linux 上，Mailspring 使用桌面密钥环（KWallet、GNOME Keyring 或其他 Secret Service 服务）保存密码。请确认密钥环已安装、启动并解锁，然后重启 Mailspring。",
   " and %@ more": "等另外 %@ 位",
   "\"Launch on system start\" only works in XDG-compliant desktop environments. To enable the Mailspring icon in the system tray, you may need to install libappindicator or libayatana-appindicator.": "“在系统启动时启动”仅适用于符合XDG标准的桌面环境。要在系统托盘中启用Mailspring图标，您可能需要安装libappindicator or libayatana-appindicator。",

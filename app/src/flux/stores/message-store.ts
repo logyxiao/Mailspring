@@ -33,12 +33,14 @@ class _MessageStore extends MailspringStore {
   //########## PUBLIC #####################################################
 
   items() {
-    if (this._showingHiddenItems) return this._items;
+    const perspective = FocusedPerspectiveStore.current();
+    const items = perspective.filterMessages(this._items);
+    if (this._showingHiddenItems) return items;
 
     const viewing = FocusedPerspectiveStore.current().categoriesSharedRole();
     const viewingHiddenCategory = FolderNamesHiddenByDefault.includes(viewing);
 
-    return this._items.filter((item) => {
+    return items.filter((item) => {
       const inHidden = item.folder ? FolderNamesHiddenByDefault.includes(item.folder.role) : false;
       return viewingHiddenCategory ? inHidden || item.draft : !inHidden;
     });
@@ -63,7 +65,9 @@ class _MessageStore extends MailspringStore {
   }
 
   numberOfHiddenItems() {
-    return this._items.length - this.items().length;
+    return (
+      FocusedPerspectiveStore.current().filterMessages(this._items).length - this.items().length
+    );
   }
 
   itemIds() {

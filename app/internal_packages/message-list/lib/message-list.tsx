@@ -6,6 +6,7 @@ import {
   Utils,
   Actions,
   MessageStore,
+  FocusedPerspectiveStore,
   Message,
   Thread,
   TaskQueue,
@@ -501,7 +502,10 @@ class MessageList extends React.Component<Record<string, unknown>, MessageListSt
   }
 
   _renderSubject() {
-    let subject = this.state.currentThread.subject;
+    let subject = FocusedPerspectiveStore.current().displaySubject(
+      this.state.currentThread,
+      this.state.messages
+    );
     if (!subject || subject.length === 0) {
       subject = localized('(No Subject)');
     }

@@ -13,7 +13,8 @@ export function threadAriaLabel(thread: Thread): string {
     .join(', ');
   if (names) parts.push(names);
 
-  const subj = (thread.subject || '').trim() || localized('No Subject');
+  const subj =
+    (thread.humanReplyPreview?.subject ?? thread.subject ?? '').trim() || localized('No Subject');
   parts.push(subj);
 
   const isSent = FocusedPerspectiveStore.current().isSent?.();

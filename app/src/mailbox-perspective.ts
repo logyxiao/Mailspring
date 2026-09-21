@@ -13,6 +13,9 @@ import ThreadCountsStore from './flux/stores/thread-counts-store';
 import FolderSyncProgressStore from './flux/stores/folder-sync-progress-store';
 import { MutableQuerySubscription } from './flux/models/mutable-query-subscription';
 import UnreadQuerySubscription from './flux/models/unread-query-subscription';
+import HumanReplyQuerySubscription from './flux/models/human-reply-query-subscription';
+import { Message } from './flux/models/message';
+import { isExcludedReplySubject } from './reply-subject-policy';
 import { Thread } from './flux/models/thread';
 import { Category } from './flux/models/category';
 import { Label } from './flux/models/label';
@@ -67,8 +70,16 @@ export class MailboxPerspective {
     return this.forStandardCategories(accountsOrIds, 'inbox');
   }
 
+  static forHumanReplies(accountsOrIds: string[]) {
+    const categories = CategoryStore.getCategoriesWithRoles(accountsOrIds, 'inbox');
+    return categories.length ? new HumanReplyMailboxPerspective(categories) : this.forNothing();
+  }
+
   static fromJSON(json: { type: string; serializedCategories?: string; accountIds: string[] }) {
     try {
+      if (json.type === HumanReplyMailboxPerspective.name) {
+        return this.forHumanReplies(json.accountIds);
+      }
       if (json.type === CategoryMailboxPerspective.name) {
         const categories = JSON.parse(json.serializedCategories).map(Utils.convertToModel);
         return this.forCategories(categories);
@@ -176,6 +187,14 @@ export class MailboxPerspective {
 
   unreadCount(): number {
     return 0;
+  }
+
+  filterMessages(messages: Message[]): Message[] {
+    return messages;
+  }
+
+  displaySubject(thread: Thread, messages: Message[]) {
+    return thread.subject;
   }
 
   // Public:
@@ -570,6 +589,38 @@ class CategoryMailboxPerspective extends MailboxPerspective {
         source: source,
       });
     });
+  }
+}
+
+class HumanReplyMailboxPerspective extends CategoryMailboxPerspective {
+  name = localized('Human Replies');
+  iconName = 'inbox.png';
+
+  threads(): QuerySubscription<Thread> {
+    return new HumanReplyQuerySubscription(this.categories().map((c) => c.id));
+  }
+
+  unreadCount() {
+    return ThreadCountsStore.humanReplyUnreadCountForAccountIds(this.accountIds);
+  }
+
+  canReceiveThreadsFromAccountIds() {
+    return false;
+  }
+
+  filterMessages(messages: Message[]) {
+    return messages.filter((message) => message.draft || !isExcludedReplySubject(message.subject));
+  }
+
+  displaySubject(thread: Thread, messages: Message[]) {
+    const latest = this.filterMessages(messages)
+      .filter((message) => !message.draft && message.folder?.role !== 'sent')
+      .sort((a, b) => b.date.getTime() - a.date.getTime())[0];
+    return latest ? latest.subject : thread.subject;
+  }
+
+  emptyMessage() {
+    return localized('No human replies in the inbox');
   }
 }
 

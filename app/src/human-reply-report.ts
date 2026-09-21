@@ -1,6 +1,7 @@
 import { SENT_RECIPIENT_QUERY } from './sent-recipient-export';
 
-export const DEFAULT_REPLY_EXCLUSIONS = ['自动回复', 'AutoReply', 'AutoReplay', 'Re:'];
+import { DEFAULT_REPLY_EXCLUSIONS, isExcludedReplySubject } from './reply-subject-policy';
+export { DEFAULT_REPLY_EXCLUSIONS, isExcludedReplySubject } from './reply-subject-policy';
 
 export interface ReplyReportMessage {
   id: string;
@@ -82,11 +83,6 @@ function bracketedTitle(subject: string) {
     ...new Set([...normalize(subject).matchAll(/《([^《》]+)》/g)].map((m) => m[1].trim())),
   ];
   return titles.length === 1 ? titles[0].toLowerCase() : '';
-}
-
-export function isExcludedReplySubject(subject: string, exclusions = DEFAULT_REPLY_EXCLUSIONS) {
-  const lower = (subject || '').toLowerCase();
-  return exclusions.some((value) => value.trim() && lower.includes(value.trim().toLowerCase()));
 }
 
 export function analyzeHumanReplies(

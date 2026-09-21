@@ -141,6 +141,7 @@ describe('MessageStore', function () {
       it('should show only the message which are in trash or spam, and drafts', function () {
         spyOn(FocusedPerspectiveStore, 'current').andReturn({
           categoriesSharedRole: () => 'trash',
+          filterMessages: (messages) => messages,
         });
         expect(MessageStore.items()).toEqual([
           MessageStore._items[0],
@@ -153,6 +154,7 @@ describe('MessageStore', function () {
       it('should hide all of the messages which are in trash or spam', function () {
         spyOn(FocusedPerspectiveStore, 'current').andReturn({
           categoriesSharedRole: () => 'inbox',
+          filterMessages: (messages) => messages,
         });
         expect(MessageStore.items()).toEqual([
           MessageStore._items[1],

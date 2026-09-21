@@ -59,8 +59,8 @@ class SidebarSection {
     const starredItem = SidebarItem.forStarred([account.id]);
     const draftsItem = SidebarItem.forDrafts([account.id]);
 
-    // Order correctly: Inbox, Unread, Starred, rest... , Drafts
-    items.splice(1, 0, unreadItem, starredItem);
+    // Order: Inbox, Human Replies, Unread, Starred, rest..., Drafts.
+    items.splice(1, 0, SidebarItem.forHumanReplies([account.id]), unreadItem, starredItem);
     items.push(draftsItem);
 
     ExtensionRegistry.AccountSidebar.extensions()
@@ -69,7 +69,7 @@ class SidebarSection {
         const { id, name, iconName, perspective, insertAtTop } = ext.sidebarItem([account.id]);
         const item = SidebarItem.forPerspective(id, perspective, { name, iconName });
         if (insertAtTop) {
-          return items.splice(3, 0, item);
+          return items.splice(4, 0, item);
         } else {
           return items.push(item);
         }
@@ -132,12 +132,15 @@ class SidebarSection {
     const unreadItem = SidebarItem.forUnread(accountIds, {
       children: accounts.map((acc) => SidebarItem.forUnread([acc.id], { name: acc.label })),
     });
+    const humanReplyItem = SidebarItem.forHumanReplies(accountIds, {
+      children: accounts.map((acc) => SidebarItem.forHumanReplies([acc.id], { name: acc.label })),
+    });
     const draftsItem = SidebarItem.forDrafts(accountIds, {
       children: accounts.map((acc) => SidebarItem.forDrafts([acc.id], { name: acc.label })),
     });
 
-    // Order correctly: Inbox, Unread, Starred, rest... , Drafts
-    items.splice(1, 0, unreadItem, starredItem);
+    // Order: Inbox, Human Replies, Unread, Starred, rest..., Drafts.
+    items.splice(1, 0, humanReplyItem, unreadItem, starredItem);
     items.push(draftsItem);
 
     ExtensionRegistry.AccountSidebar.extensions()
@@ -156,7 +159,7 @@ class SidebarSection {
           }),
         });
         if (insertAtTop) {
-          items.splice(3, 0, item);
+          items.splice(4, 0, item);
         } else {
           items.push(item);
         }

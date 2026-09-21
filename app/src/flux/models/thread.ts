@@ -139,6 +139,7 @@ export class Thread extends ModelWithMetadata {
 
   public snippet: string;
   public subject: string;
+  public humanReplyPreview?: { subject: string; snippet: string };
   public unread: boolean;
   public starred: boolean;
   public version: number;
